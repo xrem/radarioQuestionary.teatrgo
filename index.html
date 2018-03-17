@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=450, initial-scale=1">
+        <title>Тест Театр.Go и Культура.рф</title>
+        <link rel="stylesheet" href="styles.css" type="text/css" media="all" />
+        <script src="js/lib/jquery-3.3.1.min.js"></script>
+        <script src="js/lib/handlebars-v4.0.11.js"></script>
+    </head>
+    <body onselectstart="return false">
+        <div class="logobox">
+            <a href="https://afisha.yandex.ru/skidka-na-bilety-v-teatr" target="_blank">
+                <img src="img/teatr-go@2x.png" height="24px">
+            </a>
+            <img src="img/x@2x.png" height="24px">
+            <a href="https://www.culture.ru" target="_blank">
+                <img src="img/kultura@2x.png" height="24px">
+            </a>
+        </div>
+        <div class="mainbox">
+            <div class="coverimg" style="background-image: url(img/intro-pexels.com.jpg);">
+                <h2>
+                    <br>
+                </h2>
+                <h1>Какой ты театрал?</h1>
+                <h3>тест ко дню театра</h3>
+            </div>
+            <div class="question-container">
+                <i>Фото с сайта: pexels.com</i>
+                <div class="welcome-text">
+                    Когда в России появился первый настоящий театр, какой была первая постановка Станиславского, сколько зрителей вмещает исторический
+                    зал Большого театра? Проходите наш тест, проверяйте свои театральные познания и делитесь результатами в соцсетях.
+                    А ещё вы можете выиграть 20 сертификатов на покупку билетов в любой театр. Подробные правила и сроки проведения
+                    розыгрыша вы можете узнать, перейдя по <a href="#">ссылке</a>
+                </div>
+                <div class="btn-container" style="display: none">
+                    <span class="btn">Начать тест</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Templates -->
+        <script id="pick-one-template" type="text/x-handlebars-template">
+            <div class="mainbox">
+                <div class="coverimg" style="background-image: url(img/{{headerImage}});">
+                    <h2>{{progress}}</h2>
+                    <h1>{{question}}</h1>
+                </div>
+                <div class="question-container">
+                    <i>Фото с сайта: {{source}}</i>
+                    <div class="variant" onclick="radarioQuestionary.pick('a');">
+                        <span class="variant-mark">А</span>
+                        <span>{{q1.initalText}}</span>
+                    </div>
+                    <div class="variant" onclick="radarioQuestionary.pick('b');">
+                        <span class="variant-mark">Б</span>
+                        <span>{{q2.initalText}}</span>
+                    </div>
+                    <div class="variant" onclick="radarioQuestionary.pick('c');">
+                        <span class="variant-mark">В</span>
+                        <span>{{q3.initalText}}</span>
+                    </div>
+                    <div class="variant" onclick="radarioQuestionary.pick('d');">
+                        <span class="variant-mark">Г</span>
+                        <span>{{q4.initalText}}</span>
+                    </div>
+                    <div class="btn-container" style="display:none">
+                        <span class="btn">Дальше</span>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <script id="selectize-template" type="text/x-handlebars-template">
+            <div class="mainbox">
+                    <div class="coverimg" style="background-image: url(img/{{headerImage}});">
+                        <h2>{{progress}}</h2>
+                        <h1>{{question}}</h1>
+                    </div>
+                    <div class="question-container">
+                        <i>Фото с сайта: {{source}}</i>
+                        <table border="0" cellspacing="15" align="center">
+                            <tr>
+                                <td align="right">
+                                    <input type="hidden" name="variant" value="a">
+                                    <img src="img/{{q1.image}}">
+                                    {{{formedSelect}}}
+                                    <div class="photolable-r" style="margin-left:60px; display:none">photolable</div>
+                                </td>
+                                <td align="left">
+                                    <input type="hidden" name="variant" value="b">
+                                    <img src="img/{{q2.image}}">
+                                    {{{formedSelect}}}
+                                    <div class="photolable-l" style="display:none">photolable</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">
+                                    <input type="hidden" name="variant" value="c">
+                                    <img src="img/{{q3.image}}">
+                                    {{{formedSelect}}}
+                                    <div class="photolable-r" style="margin-left:60px; display:none">photolable</div>
+                                </td>
+                                <td align="left">
+                                    <input type="hidden" name="variant" value="d">
+                                    <img src="img/{{q4.image}}">
+                                    {{{formedSelect}}}
+                                    <div class="photolable-l" style="display:none">photolable</div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="btn-container" style="display:none">
+                            <span class="btn">Дальше</span>
+                        </div>
+                    </div>
+                </div>
+        </script>
+        <script id="finish-template" type="text/x-handlebars-template">
+            <div class="mainbox">
+                    <div class="coverimg" style="background-image: url(img/result-{{rank}}-pexels.com.jpg);">
+                        <h2>{{progress}}</h2>
+                    </div>
+                    <div style="padding:20px 20px 30px 20px;">
+                        <i>Фото с сайта: pexels.com</i>
+                        <div style="margin-top:10px">
+                            {{rankDescription}}
+                            <br><br>
+                            27 марта – Всемирный день театра. Знакомьтесь с <a href="https://theatreday.culture.ru/">программой мероприятий</a> по всей стране и планируйте свой театральный праздник
+                            <br><br>
+                            В этот день можно купить билеты на лучшие постановки страны со скидкой до 90% в рамках проекта Театр.Go. Смотрите список театров-участников и <a href="https://afisha.yandex.ru/skidka-na-bilety-v-teatr">подписывайтесь на уведомления об акции</a>.
+                        </div>
+                        <div style="text-align:center; margin: 40px 0 30px 0">
+                            <div style="margin-bottom:50px">
+                                <img height="23px" src="img/fb@2x.png">
+                                <img height="23px" src="img/vk@2x.png">
+                                <img height="23px" src="img/tw@2x.png">
+                                <img height="23px" src="img/telegram@2x.png">
+                            </div>
+                            <span class="btn" onclick="window.location.reload()">Ещё раз?</span>
+                        </div>
+                    </div>
+                </div>
+        </script>
+
+        <!-- Core scripting -->
+        <script src="js/config.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
