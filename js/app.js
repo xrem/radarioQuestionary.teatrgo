@@ -53,7 +53,7 @@
                 return;
             }
             if (questionObject.questionType == 'selectize') {
-                var selectHTML = '<select class="selectone" onchange="radarioQuestionary.pick(\'whatever\')"><option disabled selected>Выберите вариант</option>';
+                var selectHTML = '<select class="selectone" onchange="radarioQuestionary.pick(this)"><option disabled selected>Выберите вариант</option>';
                 var s = questionObject.variants.initalSelectize;
                 for(var i = 0; i < s.length; i++) {
                     selectHTML += '<option>' + s[i].toString() + '</option>';
@@ -80,6 +80,10 @@
             var variants = $(".variant");
             for(var i = 0; i < variants.length; i++) {
                 var classToAdd = 'inactive'
+                var vr = String.fromCharCode('a'.charCodeAt(0) + i);
+                if (_Q.ctx.variants[vr].isCorrect) {
+                    classToAdd = 'ok';
+                }
                 if (i == idx) {
                     if (_Q.ctx.variants[chosenAnswer].isCorrect) {
                         classToAdd = 'ok';
@@ -102,9 +106,9 @@
                 var correctValue = radarioQuestionary.ctx.variants[getterKey].correctValue;
                 var $photolabel = $(selections[i]).parent().siblings("div");
                 if (selectedValue == correctValue) {
-                    $photolabel.addClass('photolable-ok').text('Правильный вариант');
+                    $photolabel.addClass('photolable-ok').html('Верно! <br> &nbsp;');
                 } else {
-                    $photolabel.addClass('photolable-wrong').text('Неправильный вариант');
+                    $photolabel.addClass('photolable-wrong').html('Правильный вариант: <br>' + correctValue);
                     incrementScore = false;
                 }
                 $photolabel.show();
@@ -116,8 +120,15 @@
         _Q.pick = function(variant) {
             if (variant != null && _Q.ctx != null) {
                 if (_Q.ctx.questionType == 'selectize') {
-                    if ($('.selectone option:selected[disabled]').length > 0) {
-                        return; //not everything selected yet.
+                    if ($('.selectone option:selected[disabled]').length >= 0) {
+                        if (typeof(variant) === "object") {
+                            var $el = $(variant);
+                            $el.prop("disabled", "disabled");
+                            $('option:contains("'+$el.val()+'")').filter(":not(:selected)").remove();
+                        }
+                        if ($('.selectone option:selected[disabled]').length > 0) {
+                            return; //not everything selected yet.
+                        }
                     }
                     processMechanique2();
                 }
