@@ -212,3 +212,7 @@ a {
 .photolable-wrong {
     color: rgb(255, 91, 77);
 }
+
+.share {
+    cursor: pointer;
+}

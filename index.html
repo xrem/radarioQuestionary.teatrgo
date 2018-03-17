@@ -6,7 +6,7 @@
         <title>Тест Театр.Go и Культура.рф</title>
         <link rel="stylesheet" href="styles.css" type="text/css" media="all" />
         <script src="js/lib/jquery-3.3.1.min.js"></script>
-        <script src="js/lib/handlebars-v4.0.11.js"></script>z
+        <script src="js/lib/handlebars-v4.0.11.js"></script>
     </head>
     <body onselectstart="return false">
         <div class="logobox">
@@ -128,16 +128,36 @@
                         </div>
                         <div style="text-align:center; margin: 40px 0 30px 0">
                             <div style="margin-bottom:50px">
-                                <img height="23px" src="img/fb@2x.png">
-                                <img height="23px" src="img/vk@2x.png">
-                                <img height="23px" src="img/tw@2x.png">
-                                <img height="23px" src="img/telegram@2x.png">
+                                <img class="share" height="23px" src="img/fb@2x.png" onclick="shareFB()">
+                                <img class="share" height="23px" src="img/vk@2x.png" onclick="shareVK()">
+                                <img class="share" height="23px" src="img/tw@2x.png" onclick="shareTW()">
+                                <img class="share" height="23px" src="img/telegram@2x.png" onclick="shareTG()">
                             </div>
                             <span class="btn" onclick="window.location.reload()">Ещё раз?</span>
                         </div>
                     </div>
                 </div>
         </script>
+
+        <!-- fb -->
+        <div style="display: none">
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.12&appId=625597877788447&autoLogAppEvents=1";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+            <script>
+                var shareFB = function() {
+                    FB.ui({
+                        method: 'share',
+                        href: 'https://developers.facebook.com/docs/',
+                    }, function(response){});
+                }
+            </script>
+        </div>
 
         <!-- Core scripting -->
         <script src="js/config.js"></script>
