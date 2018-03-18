@@ -32,6 +32,7 @@
                 rankDescription: rankDescription
             };
             $(".mainbox").replaceWith(_Q.finishTemplate(context));
+            $("#marketing-email-collector-container").replaceWith($("iframe[src*='marketing.radario.co']"));
         };
         var loadQuestion = function(questionObject) {
             if (questionObject == null) {
