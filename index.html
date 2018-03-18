@@ -128,10 +128,10 @@
                         </div>
                         <div style="text-align:center; margin: 40px 0 30px 0">
                             <div style="margin-bottom:50px">
-                                <img class="share" height="23px" src="img/fb@2x.png" onclick="shareFB()">
-                                <img class="share" height="23px" src="img/vk@2x.png" onclick="shareVK()">
-                                <img class="share" height="23px" src="img/tw@2x.png" onclick="shareTW()">
-                                <img class="share" height="23px" src="img/telegram@2x.png" onclick="shareTG()">
+                                <img class="share" height="23px" src="img/fb@2x.png" onclick="shareFB({{rank}})">
+                                <img class="share" height="23px" src="img/vk@2x.png" onclick="shareVK({{rank}})">
+                                <img class="share" height="23px" src="img/tw@2x.png" onclick="window.open('https://twitter.com/intent/tweet?text=Какой%20ты%20театрал?%20Проверь%20свои%20знания%20перед%20Всемирным%20днем%20театра!%20–%20Театр.Go%20x%20Культура.рф%20https://xrem.github.io/radarioQuestionary.teatrgo%20с%20помощью%20@cultrf', '_blank')">
+                                <img class="share" height="23px" src="img/telegram@2x.png" onclick="window.open('https://t.me/share/url?text=Какой%20ты%20театрал?%20Проверь%20свои%20знания%20перед%20Всемирным%20днем%20театра!&url=https://xrem.github.io/radarioQuestionary.teatrgo/', '_blank')">
                             </div>
                             <span class="btn" onclick="window.location.reload()">Ещё раз?</span>
                         </div>
@@ -150,14 +150,22 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));</script>
             <script>
-                var shareFB = function() {
+                var shareFB = function(n) {
                     FB.ui({
                         method: 'share',
-                        href: 'https://developers.facebook.com/docs/',
+                        href: 'https://xrem.github.io/radarioQuestionary.teatrgo/share/'+ n.toString() + '.html',
                     }, function(response){});
                 }
             </script>
         </div>
+
+        <script>
+            var shareVK = function(n) {
+                url = 'https://xrem.github.io/radarioQuestionary.teatrgo/share/' + n.toString() + '.html';
+                shareUrl = 'https://vk.com/share.php?url=' + url;
+                window.open(shareUrl, "_blank");
+            }
+        </script>
 
         <!-- Core scripting -->
         <script src="js/config.js"></script>
