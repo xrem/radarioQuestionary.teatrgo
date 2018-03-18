@@ -171,8 +171,8 @@
                 },
                 {
                     headerText: 'Чье имя носят театры и в Москве, и в Санкт-Петербурге?',
-                    headerImage: '7-pexels.com.jpg',
-                    source: 'pexels.com',
+                    headerImage: '7-culture.ru.jpg',
+                    source: 'culture.ru',
                     questionType: 'pickOne',
                     variants: {
                         a: {
@@ -226,7 +226,7 @@
                     }
                 },
                 {
-                    headerText: 'Николай Анненков был первым в мире профессиональным театральным актером, который отметил свой 100-летний юбилей на сцене. А кто был вторым?',
+                    headerText: 'Николай Анненков был первым актером, который отметил свой 100-летний юбилей на сцене. А кто был вторым?',
                     headerImage: '9-pexels.com.jpg',
                     source: 'pexels.com',
                     questionType: 'pickOne',

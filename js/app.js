@@ -14,7 +14,7 @@
         };
         var processToResults = function() {
             var rank = 1;
-            var rankDescription = 'Вам стоит приоткрыть занавес и узнать театральное искусство поближе!';
+            var rankDescription = 'Пожалуй, вам стоит приоткрыть занавес и познакомиться с миром театра поближе.';
             if (_Q.score > 3) {
                 rank++;
             }
