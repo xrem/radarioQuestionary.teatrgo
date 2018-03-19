@@ -34,6 +34,26 @@
             $(".mainbox").replaceWith(_Q.finishTemplate(context));
             $("#marketing-email-collector-container").replaceWith($("iframe[src*='marketing.radario.co']"));
         };
+        var checkSelectizeResult = function() {
+            var selections = $('.selectone option:selected');
+            var incrementScore = true;
+            for(var i = 0; i < selections.length; i++) {
+                var getterKey = $(selections[i]).parent().siblings("input").val();
+                var selectedValue = $(selections[i]).val()
+                var correctValue = radarioQuestionary.ctx.variants[getterKey].correctValue;
+                var $photolabel = $(selections[i]).parent().siblings("div");
+                if (selectedValue == correctValue) {
+                    $photolabel.addClass('photolable-ok').html('Верно! <br> &nbsp;');
+                } else {
+                    $photolabel.addClass('photolable-wrong').html('Правильный вариант: <br>' + correctValue);
+                    incrementScore = false;
+                }
+                $photolabel.show();
+            }
+            if (incrementScore) {
+                radarioQuestionary.score++;
+            }
+        }
         var loadQuestion = function(questionObject) {
             if (questionObject == null) {
                 processToResults(); //there is no more questions left
@@ -54,10 +74,10 @@
                 return;
             }
             if (questionObject.questionType == 'selectize') {
-                var selectHTML = '<select class="selectone" onchange="radarioQuestionary.pick(this)"><option disabled selected>Выберите вариант</option>';
+                var selectHTML = '<select class="selectone" onchange="radarioQuestionary.pick(this)"><option selected value="false">Выберите вариант</option>';
                 var s = questionObject.variants.initalSelectize;
                 for(var i = 0; i < s.length; i++) {
-                    selectHTML += '<option>' + s[i].toString() + '</option>';
+                    selectHTML += '<option value="' + s[i].toString() + '">' + s[i].toString() + '</option>';
                 }
                 selectHTML += '</select>'
                 var context = {
@@ -72,6 +92,23 @@
                     formedSelect: selectHTML
                 };
                 $(".mainbox").replaceWith(_Q.selectizeTemplate(context));
+                _Q.os = $($(".selectone")[0]).children("option");
+                $(".btn").click(function() {
+                    var $ar = $('.selectone option:selected');
+                    var err = false;
+                    for(var i = 0; i < $ar.length; i++) {
+                        if ($($ar[i]).val() == "false") {
+                            err = true;
+                        }
+                    }
+                    if (err) {
+                        $("#err-fill").show();
+                    } else {
+                        checkSelectizeResult();
+                        _Q.pick();
+                        $(this).text("Далее");
+                    }
+                });
                 return;
             }
             console.error("Unknown question type");
@@ -99,39 +136,55 @@
             }
         }
         var processMechanique2 = function() {
-            var selections = $('.selectone option:selected');
-            var incrementScore = true;
-            for(var i = 0; i < selections.length; i++) {
-                var getterKey = $(selections[i]).parent().siblings("input").val();
-                var selectedValue = $(selections[i]).val()
-                var correctValue = radarioQuestionary.ctx.variants[getterKey].correctValue;
-                var $photolabel = $(selections[i]).parent().siblings("div");
-                if (selectedValue == correctValue) {
-                    $photolabel.addClass('photolable-ok').html('Верно! <br> &nbsp;');
-                } else {
-                    $photolabel.addClass('photolable-wrong').html('Правильный вариант: <br>' + correctValue);
-                    incrementScore = false;
-                }
-                $photolabel.show();
-            }
-            if (incrementScore) {
-                radarioQuestionary.score++;
+            $("#err-fill").hide();
+            var pickedValues = $(".selectone").filter(function() { return $(this).val() !== "false"; }).map(function() {return $(this).val()});
+            var s = $(".selectone");
+            for(var z = 0; z < s.length; z++) {
+                $(s[z]).children("option:not(:selected)").filter(function() {
+                    var alreadyPicked = false;
+                    var pv = $(this).val();
+                    for(var i = 0; i < pickedValues.length; i++) {
+                        if (pickedValues[i] === pv) {
+                            alreadyPicked = true;
+                        }
+                    }
+                    return alreadyPicked;
+                }).remove();
+            };
+            var variantsThatShouldBeAvailable = radarioQuestionary.os.clone().filter(function() { 
+                    if ($(this).val() === "false") {
+                        return false;
+                    } else {
+                        var alreadyPicked = false;
+                        var pv = $(this).val();
+                        for(var i = 0; i < pickedValues.length; i++) {
+                            if (pickedValues[i] === pv) {
+                                alreadyPicked = true;
+                            }
+                        }
+                        return !alreadyPicked;
+                    }
+                });
+            for(var z = 0; z < s.length; z++) {
+                var variantsToAdd = variantsThatShouldBeAvailable.clone().filter(function(){
+                    var selectContainsThisVariant = false;
+                    var opts = $(s[z]).children("option");
+                    for(var i = 0; i < opts.length; i++) {
+                        if ($(opts[i]).val() === $(this).val()) {
+                            selectContainsThisVariant = true;
+                        }
+                    }
+                    return !selectContainsThisVariant;
+                }).each(function() {
+                    $(s[z]).append(this);
+                });
             }
         }
         _Q.pick = function(variant) {
             if (variant != null && _Q.ctx != null) {
                 if (_Q.ctx.questionType == 'selectize') {
-                    if ($('.selectone option:selected[disabled]').length >= 0) {
-                        if (typeof(variant) === "object") {
-                            var $el = $(variant);
-                            $el.prop("disabled", "disabled");
-                            $('option:contains("'+$el.val()+'")').filter(":not(:selected)").remove();
-                        }
-                        if ($('.selectone option:selected[disabled]').length > 0) {
-                            return; //not everything selected yet.
-                        }
-                    }
                     processMechanique2();
+                    return;
                 }
                 if (_Q.ctx.questionType == 'pickOne') {
                     processMechanique1(variant);
