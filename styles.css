@@ -216,3 +216,9 @@ a {
 .share {
     cursor: pointer;
 }
+
+.finish-header {
+    color: black !important; 
+    font-size: 22px; 
+    margin-bottom: 32px;
+}
