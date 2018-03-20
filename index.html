@@ -136,8 +136,8 @@
                             <div>
                                 <img class="share" height="23px" src="img/fb@2x.png" onclick="shareFB({{rank}})">
                                 <img class="share" height="23px" src="img/vk@2x.png" onclick="shareVK({{rank}})">
-                                <img class="share" height="23px" src="img/tw@2x.png" onclick="window.open('https://twitter.com/intent/tweet?text=Какой%20ты%20театрал?%20Проверь%20свои%20знания%20перед%20Всемирным%20днем%20театра!%20–%20Театр.Go%20x%20Культура.рф%20https://xrem.github.io/radarioQuestionary.teatrgo%20с%20помощью%20@cultrf', '_blank')">
-                                <img class="share" height="23px" src="img/telegram@2x.png" onclick="window.open('https://t.me/share/url?text=Какой%20ты%20театрал?%20Проверь%20свои%20знания%20перед%20Всемирным%20днем%20театра!&url=https://xrem.github.io/radarioQuestionary.teatrgo/', '_blank')">
+                                <img class="share" height="23px" src="img/tw@2x.png" onclick="window.open('https://twitter.com/intent/tweet?text=Какой%20ты%20театрал?%20Проверь%20свои%20знания%20перед%20Всемирным%20днем%20театра!%20–%20Театр.Go%20x%20Культура.рф%20https://theatreday.culture.ru/theatretest%20с%20помощью%20@cultrf', '_blank')">
+                                <img class="share" height="23px" src="img/telegram@2x.png" onclick="window.open('https://t.me/share/url?text=Какой%20ты%20театрал?%20Проверь%20свои%20знания%20перед%20Всемирным%20днем%20театра!&url=https://theatreday.culture.ru/theatretest/', '_blank')">
                             </div>
                             <div id="marketing-email-collector-container">&nbsp;</div>
                             <u><b><a href="#" onclick="window.location.reload()">Пройти тест ещё раз?</a></b></u>
@@ -160,7 +160,7 @@
                 var shareFB = function(n) {
                     FB.ui({
                         method: 'share',
-                        href: 'https://xrem.github.io/radarioQuestionary.teatrgo/share/'+ n.toString() + '.html',
+                        href: 'https://theatreday.culture.ru/theatretest/share/'+ n.toString() + '.html',
                     }, function(response){});
                 }
             </script>
@@ -172,7 +172,7 @@
 
         <script>
             var shareVK = function(n) {
-                url = 'https://xrem.github.io/radarioQuestionary.teatrgo/share/' + n.toString() + '.html';
+                url = 'https://theatreday.culture.ru/theatretest/share/' + n.toString() + '.html';
                 shareUrl = 'https://vk.com/share.php?url=' + url;
                 window.open(shareUrl, "_blank");
             }
