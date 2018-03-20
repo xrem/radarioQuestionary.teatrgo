@@ -106,6 +106,7 @@
                         $("#err-fill").show();
                     } else {
                         checkSelectizeResult();
+                        $(this).off();
                         _Q.pick();
                         $(this).text("Далее");
                     }
