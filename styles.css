@@ -98,10 +98,13 @@ a {
 .innactive {
     color: rgba(0, 0, 0, 0.3);
     cursor: default;
+    transition: none !important;
 }
 
 .innactive:hover {
-    background: none
+    background: none;
+    transition: none !important;
+    opacity: 1 !important;
 }
 
 .innactive:active {
@@ -112,13 +115,16 @@ a {
 .inactive {
     color: rgba(0, 0, 0, 0.3);
     cursor: default;
+    transition: none !important;
 }
 
 .inactive:hover {
-    background: none
+    background: none;
+    transition: none !important;
+    opacity: 1 !important;
 }
 
-.innactive:active {
+.inactive:active {
     transition: none !important;
     opacity: 1 !important;
 }

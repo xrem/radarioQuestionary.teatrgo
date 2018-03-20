@@ -54,6 +54,7 @@
             if (incrementScore) {
                 radarioQuestionary.score++;
             }
+            $(".selectone").prop("disabled", "disabled");
         }
         var loadQuestion = function(questionObject) {
             if (questionObject == null) {
@@ -194,6 +195,7 @@
                 _Q.ctx = null;
             }
             $('.btn-container').show();
+            $('.btn').off();
             $('.btn').click(function() {
                 loadQuestion(pickNextQuestion());
             })
